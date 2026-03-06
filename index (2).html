@@ -1,0 +1,961 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>NordSource — Defence & Industrial Sourcing</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet"/>
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+<style>
+:root{
+  --navy:#0a1628;--navy-mid:#112240;--navy-light:#1a3a6b;--steel:#2e4a7a;
+  --accent:#c9a84c;--accent-light:#e8c870;--silver:#8a9ab5;--mist:#d4dce8;
+  --white:#f8fafc;--text:#1e2d45;--body:#4a5568;--bg:#f3f6fb;
+  --fd:'Playfair Display',Georgia,serif;--fb:'DM Sans',sans-serif;--fm:'Space Mono',monospace;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--fb);background:var(--white);color:var(--text);line-height:1.6;overflow-x:hidden}
+img{display:block;max-width:100%}
+a{text-decoration:none}
+button{cursor:pointer;font-family:var(--fb)}
+
+/* NAVBAR */
+nav{position:fixed;top:0;left:0;right:0;z-index:9999;height:68px;display:flex;align-items:center;justify-content:space-between;padding:0 2rem;background:rgba(10,22,40,.97);backdrop-filter:blur(12px);border-bottom:1px solid rgba(201,168,76,.18)}
+.logo{display:flex;align-items:center;gap:.7rem;cursor:pointer}
+.logo-box{width:36px;height:36px;background:linear-gradient(135deg,var(--accent),var(--accent-light));border-radius:6px;display:flex;align-items:center;justify-content:center;font-family:var(--fm);font-weight:700;font-size:1rem;color:var(--navy)}
+.logo-text{font-family:var(--fd);font-size:1.15rem;color:var(--white)}
+.logo-text span{color:var(--accent)}
+.nav-links{display:flex;list-style:none;align-items:center;gap:.2rem}
+.nav-links li a{color:#b8c8dc;font-size:.85rem;font-weight:500;padding:.45rem .9rem;border-radius:4px;transition:all .2s;letter-spacing:.02em;cursor:pointer;display:block}
+.nav-links li a:hover,.nav-links li a.active{color:var(--accent);background:rgba(201,168,76,.08)}
+.nav-cta{background:var(--accent)!important;color:var(--navy)!important;font-weight:600!important}
+.nav-cta:hover{background:var(--accent-light)!important}
+.hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:4px}
+.hamburger span{width:22px;height:2px;background:#b8c8dc;border-radius:2px}
+
+/* PAGES */
+.page{display:none;padding-top:68px}
+.page.active{display:block}
+@keyframes fadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+.page.active{animation:fadeUp .45s ease forwards}
+
+/* BUTTONS */
+.btn{display:inline-block;padding:.85rem 1.9rem;font-size:.9rem;font-weight:600;border-radius:4px;border:none;transition:all .25s;letter-spacing:.02em;cursor:pointer}
+.btn-gold{background:var(--accent);color:var(--navy)}
+.btn-gold:hover{background:var(--accent-light);transform:translateY(-2px);box-shadow:0 8px 24px rgba(201,168,76,.3)}
+.btn-outline{background:transparent;color:var(--white);border:1.5px solid rgba(255,255,255,.3)}
+.btn-outline:hover{border-color:var(--accent);color:var(--accent);transform:translateY(-2px)}
+.btn-navy{background:var(--navy);color:var(--white);border:none}
+.btn-navy:hover{background:var(--navy-light);transform:translateY(-2px);box-shadow:0 8px 24px rgba(10,22,40,.25)}
+
+/* LAYOUT */
+.container{max-width:1180px;margin:0 auto;padding:0 1.5rem}
+.sec{padding:80px 0}
+.sec-dark{background:var(--navy)}
+.sec-mid{background:var(--navy-mid)}
+.sec-light{background:var(--bg)}
+.label{font-family:var(--fm);font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);margin-bottom:.6rem}
+.h2{font-family:var(--fd);font-size:clamp(1.75rem,3vw,2.5rem);font-weight:700;color:var(--text);line-height:1.18;margin-bottom:.9rem}
+.h2.light{color:var(--white)}
+.lead{font-size:1.02rem;color:var(--body);line-height:1.72;max-width:600px}
+.lead.light{color:var(--silver)}
+.gold-bar{width:48px;height:3px;background:linear-gradient(90deg,var(--accent),var(--accent-light));border-radius:2px;margin-bottom:1.4rem}
+
+/* FADE IN */
+.fi{opacity:0;transform:translateY(22px);transition:opacity .6s ease,transform .6s ease}
+.fi.v{opacity:1;transform:translateY(0)}
+.d1{transition-delay:.1s}.d2{transition-delay:.2s}.d3{transition-delay:.3s}.d4{transition-delay:.4s}
+
+/* ══════ HOME HERO ══════ */
+.hero{min-height:92vh;background:var(--navy);display:flex;align-items:center;position:relative;overflow:hidden}
+.hero-bg{position:absolute;inset:0;background:radial-gradient(ellipse 75% 65% at 68% 50%,rgba(26,58,107,.45) 0%,transparent 70%),radial-gradient(ellipse 40% 40% at 15% 85%,rgba(201,168,76,.05) 0%,transparent 60%)}
+.hero-grid{position:absolute;inset:0;opacity:.035;background-image:linear-gradient(rgba(255,255,255,.5) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.5) 1px,transparent 1px);background-size:56px 56px}
+.hero-inner{position:relative;z-index:2;display:grid;grid-template-columns:1fr 1fr;gap:3.5rem;align-items:center;padding:60px 0}
+.hero-badge{display:inline-flex;align-items:center;gap:.5rem;background:rgba(201,168,76,.1);border:1px solid rgba(201,168,76,.28);color:var(--accent);font-size:.72rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;padding:.38rem .9rem;border-radius:100px;margin-bottom:1.4rem}
+.hero-badge::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--accent);animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(1.5)}}
+.hero h1{font-family:var(--fd);font-size:clamp(2rem,4vw,3.2rem);font-weight:700;color:var(--white);line-height:1.14;margin-bottom:1.4rem}
+.hero h1 em{font-style:normal;color:var(--accent)}
+.hero-sub{font-size:1.05rem;color:var(--silver);line-height:1.72;margin-bottom:2.2rem;max-width:500px}
+.hero-btns{display:flex;gap:.85rem;flex-wrap:wrap}
+.hero-panel{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:1.8rem}
+.panel-label{font-family:var(--fm);font-size:.66rem;color:var(--accent);letter-spacing:.12em;text-transform:uppercase;margin-bottom:1.4rem;display:flex;align-items:center;gap:.5rem}
+.panel-label::after{content:'';flex:1;height:1px;background:rgba(201,168,76,.2)}
+.panel-item{display:flex;align-items:flex-start;gap:.9rem;padding:.9rem 0;border-bottom:1px solid rgba(255,255,255,.05)}
+.panel-item:last-child{border-bottom:none}
+.pi-icon{width:36px;height:36px;background:rgba(201,168,76,.1);border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0}
+.pi-title{display:block;color:var(--white);font-size:.85rem;font-weight:600;margin-bottom:.2rem}
+.pi-sub{color:var(--silver);font-size:.78rem;line-height:1.5}
+
+/* STATS */
+.stats-bar{background:var(--navy-mid)}
+.stats-grid{display:grid;grid-template-columns:repeat(4,1fr)}
+.stat-cell{padding:2.4rem 1.5rem;text-align:center;border-right:1px solid rgba(255,255,255,.05);transition:background .3s}
+.stat-cell:last-child{border-right:none}
+.stat-cell:hover{background:rgba(255,255,255,.04)}
+.stat-num{font-family:var(--fd);font-size:2.8rem;font-weight:700;color:var(--accent);line-height:1}
+.stat-lbl{color:var(--silver);font-size:.85rem;font-weight:500;margin-top:.4rem}
+
+/* WHY */
+.why-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1.4rem;margin-top:2.8rem}
+.why-card{background:var(--white);border:1px solid var(--mist);border-radius:8px;padding:2rem;transition:all .3s;position:relative;overflow:hidden}
+.why-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--accent),var(--accent-light));transform:scaleX(0);transform-origin:left;transition:transform .3s}
+.why-card:hover::before{transform:scaleX(1)}
+.why-card:hover{box-shadow:0 8px 32px rgba(10,22,40,.1);transform:translateY(-3px)}
+.why-icon{width:46px;height:46px;background:rgba(201,168,76,.1);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:1.35rem;margin-bottom:.9rem}
+.why-card h3{font-family:var(--fd);font-size:1.1rem;font-weight:600;color:var(--text);margin-bottom:.5rem}
+.why-card p{color:var(--body);font-size:.875rem;line-height:1.68}
+
+/* COUNTRIES */
+.chips{display:flex;flex-wrap:wrap;gap:.85rem;margin-top:2.2rem}
+.chip{display:flex;align-items:center;gap:.55rem;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:100px;padding:.55rem 1.1rem;color:#b8c8dc;font-size:.85rem;font-weight:500;transition:all .25s}
+.chip:hover{background:rgba(201,168,76,.1);border-color:rgba(201,168,76,.38);color:var(--accent)}
+.chip-flag{font-size:1.15rem}
+
+/* ══════ PAGE HERO ══════ */
+.page-hero{background:var(--navy);padding:72px 0 64px;position:relative;overflow:hidden}
+.page-hero::after{content:'';position:absolute;bottom:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--accent),transparent)}
+.ph-bg{position:absolute;inset:0;background:radial-gradient(ellipse 60% 80% at 80% 50%,rgba(26,58,107,.5) 0%,transparent 70%)}
+.ph-inner{position:relative;z-index:2}
+.page-hero h1{font-family:var(--fd);font-size:clamp(1.9rem,4vw,2.9rem);font-weight:700;color:var(--white);line-height:1.14;margin-bottom:1.1rem;max-width:680px}
+.page-hero p{color:var(--silver);font-size:1rem;max-width:560px;line-height:1.72}
+
+/* ══════ SERVICES ══════ */
+.svc-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1.75rem;margin-top:2.8rem}
+.svc-card{background:var(--white);border:1px solid var(--mist);border-radius:10px;padding:2.2rem;transition:all .35s}
+.svc-card:hover{box-shadow:0 16px 48px rgba(10,22,40,.1);transform:translateY(-4px);border-color:rgba(201,168,76,.28)}
+.svc-num{font-family:var(--fm);font-size:.68rem;color:var(--accent);letter-spacing:.1em;margin-bottom:.9rem}
+.svc-icon{font-size:2rem;margin-bottom:1.1rem}
+.svc-card h3{font-family:var(--fd);font-size:1.22rem;font-weight:600;color:var(--text);margin-bottom:.65rem}
+.svc-bar{width:38px;height:2px;background:linear-gradient(90deg,var(--accent),var(--accent-light));border-radius:2px;margin:1.1rem 0}
+.svc-card p{color:var(--body);font-size:.9rem;line-height:1.72}
+.svc-tags{display:flex;flex-wrap:wrap;gap:.45rem;margin-top:1.1rem}
+.tag{background:rgba(10,22,40,.05);color:var(--navy-light);font-size:.72rem;font-weight:600;padding:.28rem .7rem;border-radius:100px}
+.cta-strip{background:linear-gradient(135deg,var(--navy-light),var(--steel));border-radius:12px;padding:2.8rem 2.5rem;display:flex;align-items:center;justify-content:space-between;gap:2rem;flex-wrap:wrap;margin-top:2.8rem;position:relative;overflow:hidden}
+.cta-strip::before{content:'';position:absolute;top:-50%;right:-8%;width:280px;height:280px;border-radius:50%;background:rgba(201,168,76,.05)}
+.cta-strip h2{font-family:var(--fd);font-size:1.5rem;color:var(--white);font-weight:600}
+.cta-strip p{color:var(--silver);margin-top:.4rem;font-size:.9rem}
+.proc-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1.5rem;margin-top:2.8rem}
+.proc-step{text-align:center;padding:1.8rem 1rem}
+.proc-num{width:56px;height:56px;background:var(--navy);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 1rem;font-family:var(--fm);color:var(--accent);font-weight:700;font-size:.85rem}
+.proc-step h4{font-family:var(--fd);font-size:1rem;margin-bottom:.45rem;color:var(--text)}
+.proc-step p{color:var(--body);font-size:.83rem;line-height:1.65}
+
+/* ══════ LEADERSHIP ══════ */
+.leader-wrap{display:flex;flex-direction:column;gap:4.5rem;margin-top:2.5rem}
+.leader-card{display:grid;grid-template-columns:420px 1fr;border-radius:16px;overflow:hidden;background:var(--white);border:1px solid var(--mist);box-shadow:0 4px 28px rgba(10,22,40,.07);transition:box-shadow .4s,transform .4s}
+.leader-card:hover{box-shadow:0 20px 64px rgba(10,22,40,.13);transform:translateY(-4px)}
+.leader-card.rev{grid-template-columns:1fr 420px}
+.l-photo{position:relative;overflow:hidden;min-height:540px}
+.leader-card.rev .l-photo{order:2}
+.leader-card.rev .l-info{order:1}
+.l-photo img{width:100%;height:100%;object-fit:cover;object-position:top center;transition:transform .6s ease}
+.leader-card:hover .l-photo img{transform:scale(1.04)}
+.l-photo-overlay{position:absolute;inset:0;background:linear-gradient(to bottom,transparent 45%,rgba(10,22,40,.58) 100%);pointer-events:none}
+.l-photo-badge{position:absolute;bottom:1.4rem;left:1.4rem;display:flex;align-items:center;gap:.5rem;background:rgba(10,22,40,.84);backdrop-filter:blur(10px);border:1px solid rgba(201,168,76,.28);border-radius:8px;padding:.55rem .95rem}
+.l-badge-flag{font-size:1.4rem}
+.l-badge-text{font-family:var(--fm);font-size:.62rem;color:var(--accent);letter-spacing:.07em;text-transform:uppercase;line-height:1.45}
+.l-info{padding:3rem 3.5rem;display:flex;flex-direction:column;justify-content:center}
+.l-num{font-family:var(--fm);font-size:.64rem;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);margin-bottom:.4rem;display:flex;align-items:center;gap:.7rem}
+.l-num::after{content:'';width:36px;height:1px;background:rgba(201,168,76,.38)}
+.l-name{font-family:var(--fd);font-size:1.9rem;font-weight:700;color:var(--text);line-height:1.1;margin-bottom:.3rem}
+.l-title{font-size:.88rem;font-weight:600;color:var(--navy-light);letter-spacing:.02em;margin-bottom:1.4rem}
+.l-bar{width:44px;height:3px;background:linear-gradient(90deg,var(--accent),var(--accent-light));border-radius:2px;margin-bottom:1.4rem}
+.l-bio{color:var(--body);font-size:.92rem;line-height:1.78;margin-bottom:.85rem}
+.l-stats{display:flex;gap:2rem;padding:1.4rem 0;border-top:1px solid var(--mist);border-bottom:1px solid var(--mist);margin:1.4rem 0}
+.l-stat strong{display:block;font-family:var(--fd);font-size:1.55rem;font-weight:700;color:var(--accent);line-height:1;margin-bottom:.2rem}
+.l-stat span{font-size:.76rem;color:var(--silver);line-height:1.35}
+.l-skills{display:flex;flex-wrap:wrap;gap:.45rem;margin-top:1.2rem}
+.skill{background:rgba(10,22,40,.05);border:1px solid var(--mist);color:var(--navy-light);font-size:.74rem;font-weight:600;padding:.3rem .8rem;border-radius:4px;transition:all .2s}
+.skill:hover{background:rgba(201,168,76,.1);border-color:rgba(201,168,76,.35);color:var(--accent)}
+.l-link{display:inline-flex;align-items:center;gap:.5rem;margin-top:1.4rem;color:var(--navy-light);font-size:.83rem;font-weight:600;border:1px solid var(--mist);padding:.45rem .95rem;border-radius:4px;transition:all .2s;width:fit-content}
+.l-link svg{width:15px;height:15px;fill:currentColor;flex-shrink:0}
+.l-link:hover{border-color:var(--accent);color:var(--accent);background:rgba(201,168,76,.05)}
+.vals-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.4rem;margin-top:2.5rem}
+.val-card{background:var(--navy);border-radius:10px;padding:2.4rem 1.8rem;text-align:center;position:relative;overflow:hidden}
+.val-card::after{content:'';position:absolute;top:-24px;right:-24px;width:90px;height:90px;border-radius:50%;background:rgba(201,168,76,.06);pointer-events:none}
+.val-icon{font-size:2rem;margin-bottom:1.1rem}
+.val-card h4{font-family:var(--fd);font-size:1.1rem;color:var(--white);margin-bottom:.65rem}
+.val-card p{color:var(--silver);font-size:.85rem;line-height:1.68}
+
+/* ══════ CONTACT ══════ */
+.contact-grid{display:grid;grid-template-columns:1fr 1.55fr;gap:4rem;margin-top:2.8rem}
+.ci h3{font-family:var(--fd);font-size:1.22rem;color:var(--text);margin:1.8rem 0 .7rem}
+.ci h3:first-child{margin-top:0}
+.ci p{color:var(--body);font-size:.88rem;line-height:1.72}
+.ci a{color:var(--navy-light);font-weight:500}
+.ci a:hover{color:var(--accent)}
+.office-box{background:var(--navy-mid);border-radius:8px;padding:1.4rem;margin-top:1.2rem}
+.office-box h4{font-family:var(--fm);font-size:.66rem;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);margin-bottom:.9rem}
+.office-row{display:flex;align-items:center;gap:.7rem;color:var(--silver);font-size:.85rem;margin-bottom:.65rem}
+.office-row .oi{width:18px;text-align:center}
+.form-box{background:var(--white);border:1px solid var(--mist);border-radius:12px;padding:2.4rem}
+.form-box h2{font-family:var(--fd);font-size:1.35rem;font-weight:600;color:var(--text);margin-bottom:.4rem}
+.form-box .fsub{color:var(--body);font-size:.87rem;margin-bottom:1.8rem}
+.form-note{background:rgba(26,58,107,.06);border-left:3px solid var(--navy-light);padding:.85rem 1rem;border-radius:0 6px 6px 0;font-size:.82rem;color:var(--body);margin-bottom:1.6rem}
+.form-note code{background:rgba(0,0,0,.06);padding:.1rem .35rem;border-radius:3px;font-size:.78rem}
+.frow{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.fg{margin-bottom:1.2rem}
+.fg label{display:block;font-size:.78rem;font-weight:600;color:var(--text);margin-bottom:.38rem;letter-spacing:.02em}
+.fg input,.fg select,.fg textarea{width:100%;padding:.7rem .95rem;border:1.5px solid var(--mist);border-radius:6px;font-family:var(--fb);font-size:.88rem;color:var(--text);background:var(--white);outline:none;transition:border-color .2s,box-shadow .2s}
+.fg input:focus,.fg select:focus,.fg textarea:focus{border-color:var(--navy-light);box-shadow:0 0 0 3px rgba(26,58,107,.08)}
+.fg textarea{resize:vertical;min-height:115px}
+.err{color:#dc2626;font-size:.76rem;margin-top:.22rem;display:none}
+.btn-submit{width:100%;padding:.95rem;background:var(--navy);color:var(--white);border:none;border-radius:6px;font-size:.92rem;font-weight:600;letter-spacing:.02em;cursor:pointer;transition:all .25s}
+.btn-submit:hover{background:var(--navy-light);transform:translateY(-2px);box-shadow:0 8px 24px rgba(10,22,40,.22)}
+.btn-submit:disabled{opacity:.65;cursor:not-allowed;transform:none;box-shadow:none}
+.success-box{display:none;background:rgba(16,185,129,.07);border:1px solid rgba(16,185,129,.28);border-radius:8px;padding:1.8rem;text-align:center}
+.success-box.show{display:block}
+.success-box .si{font-size:2.5rem;margin-bottom:.5rem}
+.success-box h3{font-family:var(--fd);font-size:1.25rem;color:#065f46;margin-bottom:.4rem}
+.success-box p{color:#047857;font-size:.87rem}
+
+/* ══════ BLOG ══════ */
+.blog-featured{display:grid;grid-template-columns:1fr 1fr;border-radius:12px;overflow:hidden;border:1px solid var(--mist);box-shadow:0 4px 20px rgba(10,22,40,.07);cursor:pointer;transition:box-shadow .35s,transform .35s;margin-bottom:2rem}
+.blog-featured:hover{box-shadow:0 16px 48px rgba(10,22,40,.12);transform:translateY(-3px)}
+.bf-img{position:relative;overflow:hidden;min-height:340px}
+.bf-img img{width:100%;height:100%;object-fit:cover;transition:transform .55s}
+.blog-featured:hover .bf-img img{transform:scale(1.05)}
+.bf-overlay{position:absolute;inset:0;background:linear-gradient(180deg,transparent 40%,rgba(10,22,40,.38) 100%);pointer-events:none}
+.bf-body{padding:2.8rem 2.5rem;display:flex;flex-direction:column;justify-content:center;background:var(--white)}
+.bf-title{font-family:var(--fd);font-size:1.5rem;font-weight:600;color:var(--text);line-height:1.22;margin-bottom:1rem}
+.blog-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.6rem}
+.blog-card{background:var(--white);border:1px solid var(--mist);border-radius:10px;overflow:hidden;cursor:pointer;transition:all .35s}
+.blog-card:hover{box-shadow:0 14px 44px rgba(10,22,40,.1);transform:translateY(-4px)}
+.bc-img{height:200px;position:relative;overflow:hidden}
+.bc-img img{width:100%;height:100%;object-fit:cover;transition:transform .5s}
+.blog-card:hover .bc-img img{transform:scale(1.06)}
+.bc-overlay{position:absolute;inset:0;background:linear-gradient(180deg,transparent 40%,rgba(10,22,40,.32) 100%);pointer-events:none}
+.bc-body{padding:1.6rem}
+.bc-meta{display:flex;align-items:center;gap:.85rem;margin-bottom:.65rem}
+.bc-cat{font-family:var(--fm);font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);background:rgba(201,168,76,.1);padding:.22rem .55rem;border-radius:4px}
+.bc-date{font-size:.77rem;color:var(--silver)}
+.bc-title{font-family:var(--fd);font-size:1.1rem;font-weight:600;color:var(--text);line-height:1.3;margin-bottom:.6rem}
+.bc-excerpt{color:var(--body);font-size:.845rem;line-height:1.65;margin-bottom:1.1rem}
+.read-more{display:inline-flex;align-items:center;gap:.4rem;color:var(--navy-light);font-size:.835rem;font-weight:600;letter-spacing:.02em;transition:gap .2s,color .2s;cursor:pointer}
+.read-more:hover{gap:.75rem;color:var(--accent)}
+.newsletter{background:linear-gradient(135deg,var(--navy),var(--navy-mid));border-radius:12px;padding:3rem 2.5rem;text-align:center;margin-top:3.5rem;position:relative;overflow:hidden}
+.newsletter::before,.newsletter::after{content:'';position:absolute;border-radius:50%;pointer-events:none}
+.newsletter::before{width:200px;height:200px;background:rgba(201,168,76,.05);top:-50px;right:-50px}
+.newsletter::after{width:150px;height:150px;background:rgba(201,168,76,.04);bottom:-40px;left:-40px}
+.nl-inner{position:relative;z-index:1}
+.nl-row{display:flex;gap:.7rem;justify-content:center;flex-wrap:wrap;max-width:440px;margin:0 auto}
+.nl-input{flex:1;min-width:200px;padding:.75rem 1rem;border:1.5px solid rgba(255,255,255,.14);background:rgba(255,255,255,.05);color:var(--white);border-radius:4px;font-family:var(--fb);font-size:.88rem;outline:none}
+.nl-input::placeholder{color:rgba(255,255,255,.35)}
+
+/* MODAL */
+.modal-bg{display:none;position:fixed;inset:0;z-index:9000;background:rgba(10,22,40,.88);backdrop-filter:blur(10px);align-items:center;justify-content:center;padding:1.5rem}
+.modal-bg.open{display:flex}
+.modal-box{background:var(--white);border-radius:12px;max-width:700px;width:100%;max-height:82vh;overflow-y:auto;padding:3rem;position:relative}
+.modal-close{position:absolute;top:1.3rem;right:1.3rem;background:var(--bg);border:1px solid var(--mist);color:var(--body);padding:.28rem .8rem;border-radius:4px;font-size:.82rem;cursor:pointer}
+.modal-close:hover{background:var(--mist)}
+.modal-body .label{margin-bottom:.3rem}
+.modal-body h2{font-family:var(--fd);font-size:1.8rem;color:var(--text);line-height:1.2;margin-bottom:1.4rem}
+.modal-body p{color:var(--body);font-size:.92rem;line-height:1.8;margin-bottom:1rem}
+.modal-body h4{font-family:var(--fd);font-size:1.05rem;color:var(--text);margin:1.6rem 0 .6rem}
+
+/* FOOTER */
+footer{background:var(--navy);padding:56px 0 28px;border-top:1px solid rgba(255,255,255,.04)}
+.footer-top{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:3rem;padding-bottom:2.8rem;border-bottom:1px solid rgba(255,255,255,.06)}
+.footer-brand p{color:var(--silver);font-size:.85rem;line-height:1.72;margin-top:.9rem;max-width:290px}
+.footer-col h4{font-family:var(--fm);font-size:.66rem;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);margin-bottom:.9rem}
+.footer-col ul{list-style:none}
+.footer-col ul li{margin-bottom:.55rem}
+.footer-col ul li a{color:var(--silver);font-size:.85rem;cursor:pointer;transition:color .2s}
+.footer-col ul li a:hover{color:var(--accent)}
+.footer-bottom{display:flex;align-items:center;justify-content:space-between;padding-top:1.4rem;flex-wrap:wrap;gap:.75rem}
+.footer-bottom p{color:var(--silver);font-size:.78rem}
+.footer-bottom span{color:var(--accent)}
+
+/* RESPONSIVE */
+@media(max-width:960px){
+  .hero-inner{grid-template-columns:1fr}
+  .hero-panel{display:none}
+  .stats-grid{grid-template-columns:repeat(2,1fr)}
+  .why-grid{grid-template-columns:1fr}
+  .svc-grid{grid-template-columns:1fr}
+  .proc-grid{grid-template-columns:repeat(2,1fr)}
+  .leader-card,.leader-card.rev{grid-template-columns:1fr}
+  .l-photo,.leader-card.rev .l-photo{order:0!important;min-height:340px}
+  .l-info,.leader-card.rev .l-info{order:1!important;padding:2rem 1.8rem}
+  .vals-grid{grid-template-columns:1fr}
+  .contact-grid{grid-template-columns:1fr}
+  .blog-featured{grid-template-columns:1fr}
+  .bf-img{min-height:260px}
+  .blog-grid{grid-template-columns:repeat(2,1fr)}
+  .footer-top{grid-template-columns:1fr 1fr}
+  .cta-strip{flex-direction:column;text-align:center}
+}
+@media(max-width:640px){
+  nav{padding:0 1.2rem}
+  .nav-links{display:none;flex-direction:column;position:fixed;top:68px;left:0;right:0;background:rgba(10,22,40,.98);padding:1.4rem;gap:.35rem;border-bottom:1px solid rgba(255,255,255,.07)}
+  .nav-links.open{display:flex}
+  .hamburger{display:flex}
+  .sec{padding:56px 0}
+  .frow{grid-template-columns:1fr}
+  .blog-grid{grid-template-columns:1fr}
+  .footer-top{grid-template-columns:1fr;gap:1.8rem}
+  .l-stats{flex-wrap:wrap;gap:1.2rem}
+}
+</style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav>
+  <div class="logo" onclick="nav('home')">
+    <div class="logo-box">NS</div>
+    <span class="logo-text">Nord<span>Source</span></span>
+  </div>
+  <ul class="nav-links" id="navLinks">
+    <li><a id="n-home" class="active" onclick="nav('home')">Home</a></li>
+    <li><a id="n-services" onclick="nav('services')">Services</a></li>
+    <li><a id="n-leadership" onclick="nav('leadership')">Leadership</a></li>
+    <li><a id="n-blog" onclick="nav('blog')">Insights</a></li>
+    <li><a id="n-contact" class="nav-cta" onclick="nav('contact')">Contact Us</a></li>
+  </ul>
+  <div class="hamburger" onclick="toggleMenu()"><span></span><span></span><span></span></div>
+</nav>
+
+<!-- ════════════ HOME ════════════ -->
+<div class="page active" id="page-home">
+  <section class="hero">
+    <div class="hero-bg"></div><div class="hero-grid"></div>
+    <div class="container">
+      <div class="hero-inner">
+        <div>
+          <div class="hero-badge">International Defence &amp; Industrial Sourcing</div>
+          <h1>Trusted Global Partner for <em>Defence &amp; Industrial</em> Sourcing</h1>
+          <p class="hero-sub">Connecting European defence buyers with reliable global manufacturing and sourcing expertise. Built on trust, technical depth, and an extensive network across Europe and beyond.</p>
+          <div class="hero-btns">
+            <button class="btn btn-gold" onclick="nav('services')">Explore Services</button>
+            <button class="btn btn-outline" onclick="nav('contact')">Contact Us</button>
+          </div>
+        </div>
+        <div class="hero-panel">
+          <div class="panel-label">Company Strengths</div>
+          <div class="panel-item"><div class="pi-icon">🎯</div><div><span class="pi-title">12+ Years Global Sourcing Experience</span><span class="pi-sub">Deep technical procurement expertise across industrial and defence sectors</span></div></div>
+          <div class="panel-item"><div class="pi-icon">🌍</div><div><span class="pi-title">Strong Defence Network in EU &amp; Ukraine</span><span class="pi-sub">Direct relationships with key procurement decision-makers and buyers</span></div></div>
+          <div class="panel-item"><div class="pi-icon">🏭</div><div><span class="pi-title">200+ Verified Manufacturing Partners</span><span class="pi-sub">Carefully audited global supplier network for defence-grade components</span></div></div>
+          <div class="panel-item"><div class="pi-icon">⚙️</div><div><span class="pi-title">Technical &amp; Procurement Expertise</span><span class="pi-sub">End-to-end support from specification to final delivery</span></div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Strengths -->
+<section class="sec sec-light">
+<div class="container">
+
+<div style="text-align:center;max-width:680px;margin:0 auto 60px">
+<div class="label">Why Trust Us</div>
+<h2 class="h2">Built on Experience & Expertise</h2>
+<p class="lead">
+We bring together decades of sourcing knowledge and defence industry relationships
+to deliver results you can count on.
+</p>
+</div>
+
+<div class="why-grid">
+
+<div class="why-card">
+<div class="why-icon">🎯</div>
+<h3>Deep Technical Expertise</h3>
+<p>Our team understands defence and industrial specifications, ensuring every supplier meets strict technical requirements.</p>
+</div>
+
+<div class="why-card">
+<div class="why-icon">🌍</div>
+<h3>Global Supplier Network</h3>
+<p>Over 200 verified manufacturing partners across Europe and Asia provide reliable sourcing options.</p>
+</div>
+
+<div class="why-card">
+<div class="why-icon">🔗</div>
+<h3>Strong Industry Relationships</h3>
+<p>Trusted connections across defence procurement teams and industrial OEMs.</p>
+</div>
+
+<div class="why-card">
+<div class="why-icon">⚙️</div>
+<h3>End-to-End Support</h3>
+<p>From supplier discovery to logistics and delivery documentation — we manage the entire sourcing lifecycle.</p>
+</div>
+
+</div>
+</div>
+</section>
+
+
+
+<!-- Why Choose Us -->
+<section class="sec">
+<div class="container">
+
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center">
+
+<div>
+<div class="label">Our Advantage</div>
+<h2 class="h2">Why Companies Choose Us</h2>
+
+<p class="lead" style="margin-bottom:30px">
+We combine deep technical expertise with strong industry relationships
+to deliver reliable sourcing solutions for the most demanding sectors.
+</p>
+
+<button class="btn btn-navy" onclick="nav('services')">
+View Our Services →
+</button>
+</div>
+
+
+<div style="display:flex;flex-direction:column;gap:18px">
+
+<div class="why-card">
+<div style="display:flex;gap:14px;align-items:flex-start">
+<div class="why-icon">🛡️</div>
+<div>
+<h3>Trusted Defence Expertise</h3>
+<p>Deep understanding of defence procurement requirements across EU markets.</p>
+</div>
+</div>
+</div>
+
+<div class="why-card">
+<div style="display:flex;gap:14px;align-items:flex-start">
+<div class="why-icon">🏭</div>
+<div>
+<h3>Verified Manufacturing Partners</h3>
+<p>All suppliers are carefully evaluated for reliability, quality standards and compliance.</p>
+</div>
+</div>
+</div>
+
+<div class="why-card">
+<div style="display:flex;gap:14px;align-items:flex-start">
+<div class="why-icon">🚚</div>
+<div>
+<h3>Reliable Logistics Coordination</h3>
+<p>End-to-end oversight from manufacturing to delivery across international supply chains.</p>
+</div>
+</div>
+</div>
+
+</div>
+
+</div>
+
+</div>
+</section>
+
+  <div class="stats-bar">
+    <div class="container"><div class="stats-grid">
+      <div class="stat-cell fi"><div class="stat-num">120+</div><div class="stat-lbl">International Orders Delivered</div></div>
+      <div class="stat-cell fi d1"><div class="stat-num">25+</div><div class="stat-lbl">Countries Served</div></div>
+      <div class="stat-cell fi d2"><div class="stat-num">200+</div><div class="stat-lbl">Verified Suppliers</div></div>
+      <div class="stat-cell fi d3"><div class="stat-num">12+</div><div class="stat-lbl">Years Industry Experience</div></div>
+    </div></div>
+  </div>
+  
+
+
+  <section class="sec sec-dark">
+    <div class="container">
+      <div class="label">Global Reach</div>
+      <h2 class="h2 light">Countries We Serve</h2>
+      <p class="lead light">Active client relationships and sourcing operations across Europe and beyond.</p>
+      <div class="chips">
+        <div class="chip"><span class="chip-flag">🇫🇮</span>Finland</div>
+        <div class="chip"><span class="chip-flag">🇩🇪</span>Germany</div>
+        <div class="chip"><span class="chip-flag">🇵🇱</span>Poland</div>
+        <div class="chip"><span class="chip-flag">🇺🇦</span>Ukraine</div>
+        <div class="chip"><span class="chip-flag">🇫🇷</span>France</div>
+        <div class="chip"><span class="chip-flag">🇮🇹</span>Italy</div>
+        <div class="chip"><span class="chip-flag">🇳🇱</span>Netherlands</div>
+        <div class="chip"><span class="chip-flag">🇮🇳</span>India</div>
+        <div class="chip"><span class="chip-flag">🌐</span>&amp; More</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec sec-mid" style="text-align:center">
+    <div class="container">
+      <div class="label" style="text-align:center">Ready to Get Started?</div>
+      <h2 class="h2 light" style="text-align:center;max-width:560px;margin:0 auto .9rem">Let's Build Your Sourcing Solution Together</h2>
+      <p class="lead light" style="text-align:center;margin:0 auto 2.2rem">Tell us about your procurement needs and we'll connect you with the right manufacturing partners.</p>
+      <div style="display:flex;gap:.85rem;justify-content:center;flex-wrap:wrap">
+        <button class="btn btn-gold" onclick="nav('contact')">Contact Our Team</button>
+        <button class="btn btn-outline" onclick="nav('services')">View Our Services</button>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ════════════ SERVICES ════════════ -->
+<div class="page" id="page-services">
+  <div class="page-hero">
+    <div class="ph-bg"></div>
+    <div class="container"><div class="ph-inner">
+      <div class="label">What We Do</div>
+      <h1>Professional Sourcing and Defence Industry Consulting</h1>
+      <p>We support defence and industrial companies with reliable sourcing, technical expertise, and international business collaboration — from specification to delivery.</p>
+    </div></div>
+  </div>
+  <section class="sec">
+    <div class="container">
+      <div class="svc-grid">
+        <div class="svc-card fi"><div class="svc-num">01 — Core Service</div><div class="svc-icon">🏭</div><h3>Industrial &amp; Defence Component Sourcing</h3><div class="svc-bar"></div><p>We source high-quality components from trusted manufacturers worldwide, ensuring reliability, compliance, and competitive pricing. Our process involves rigorous supplier qualification, technical validation, and end-to-end procurement management.</p><div class="svc-tags"><span class="tag">Component Sourcing</span><span class="tag">Defence Procurement</span><span class="tag">Supplier Qualification</span><span class="tag">Quality Assurance</span></div></div>
+        <div class="svc-card fi d1"><div class="svc-num">02 — Technical</div><div class="svc-icon">⚙️</div><h3>Technical Process Support</h3><div class="svc-bar"></div><p>Technical guidance in manufacturing processes, supplier evaluation, and quality standards. Our team provides expertise in materials, production methods, and compliance frameworks relevant to defence and industrial applications in European markets.</p><div class="svc-tags"><span class="tag">Process Consulting</span><span class="tag">Standards Compliance</span><span class="tag">Supplier Evaluation</span><span class="tag">Quality Control</span></div></div>
+        <div class="svc-card fi d2"><div class="svc-num">03 — International</div><div class="svc-icon">🌐</div><h3>International Collaboration</h3><div class="svc-bar"></div><p>We connect companies across Europe and global manufacturing markets to build long-term partnerships. Leveraging our Finnish defence network and Indian manufacturing relationships, we facilitate introductions that create lasting commercial value.</p><div class="svc-tags"><span class="tag">Partnership Development</span><span class="tag">EU Defence Network</span><span class="tag">Market Entry</span><span class="tag">Business Development</span></div></div>
+        <div class="svc-card fi d3"><div class="svc-num">04 — Strategic</div><div class="svc-icon">📊</div><h3>Strategic Business Support</h3><div class="svc-bar"></div><p>Support for procurement strategy, supplier discovery, and international expansion. We help organisations build resilient supply chains, identify alternative sourcing routes, and develop go-to-market strategies for European defence and industrial markets.</p><div class="svc-tags"><span class="tag">Procurement Strategy</span><span class="tag">Market Intelligence</span><span class="tag">Supply Chain Resilience</span><span class="tag">Expansion Planning</span></div></div>
+      </div>
+      <div class="cta-strip"><div><h2>Looking for reliable sourcing support?</h2><p>Our team is ready to discuss your specific requirements and provide tailored solutions.</p></div><button class="btn btn-gold" onclick="nav('contact')">Contact Our Team →</button></div>
+    </div>
+  </section>
+  <section class="sec sec-light">
+    <div class="container">
+      <div class="label">How We Work</div>
+      <h2 class="h2">Our Process</h2>
+      <p class="lead">A proven methodology ensuring quality, transparency, and results at every stage of your procurement journey.</p>
+      <div class="proc-grid">
+        <div class="proc-step fi"><div class="proc-num">01</div><h4>Brief &amp; Specification</h4><p>We analyse your requirements, technical specifications, and compliance needs in detail.</p></div>
+        <div class="proc-step fi d1"><div class="proc-num">02</div><h4>Supplier Discovery</h4><p>We identify and shortlist qualified manufacturers from our verified global network.</p></div>
+        <div class="proc-step fi d2"><div class="proc-num">03</div><h4>Technical Evaluation</h4><p>Rigorous technical and commercial assessment of each potential supplier partner.</p></div>
+        <div class="proc-step fi d3"><div class="proc-num">04</div><h4>Delivery &amp; Follow-up</h4><p>We oversee logistics, documentation, and ensure quality is maintained through delivery.</p></div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ════════════ LEADERSHIP ════════════ -->
+<div class="page" id="page-leadership">
+  <div class="page-hero">
+    <div class="ph-bg"></div>
+    <div class="container"><div class="ph-inner">
+      <div class="label">The Founders</div>
+      <h1>Our Leadership</h1>
+      <p>Two experienced partners. One mission — bridging European defence procurement with world-class global sourcing capability across 25+ countries.</p>
+    </div></div>
+  </div>
+  <section class="sec">
+    <div class="container">
+      <div class="leader-wrap">
+
+        <!-- Partner 1 — Finnish woman -->
+        <div class="leader-card fi">
+          <div class="l-photo">
+            <img
+              src="lady.jpg"
+              alt="Anna-Liisa Virtanen – Finnish Defence Industry Expert"
+              loading="lazy"
+              onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=840&q=82&fit=crop&crop=top&auto=format'"
+            />
+            <div class="l-photo-overlay"></div>
+            <div class="l-photo-badge">
+              <span class="l-badge-flag">🇫🇮</span>
+              <div class="l-badge-text">Helsinki, Finland<br/>European Operations</div>
+            </div>
+          </div>
+          <div class="l-info">
+            <div class="l-num">01 &middot; Co-Founder &amp; Partner</div>
+            <div class="l-name">Anna-Liisa Virtanen</div>
+            <div class="l-title">Defence Industry Expert &amp; Head of European Relations</div>
+            <div class="l-bar"></div>
+            <p class="l-bio">Anna-Liisa is a seasoned defence industry professional based in Helsinki, with over a decade of experience in sales, business development, and strategic account management within Finland's defence and security ecosystem.</p>
+            <p class="l-bio">Her extensive network spans procurement departments, OEM partners, and government agencies across Finland, Germany, Poland, the Baltic states, and Ukraine — making her the primary relationship engine for NordSource's European client engagements.</p>
+            <p class="l-bio">Having worked directly with major Nordic and Eastern European defence programmes, she brings first-hand understanding of acquisition timelines, compliance expectations, and the relationship dynamics that determine procurement outcomes in this industry.</p>
+            <div class="l-stats">
+              <div class="l-stat"><strong>10+</strong><span>Years in<br/>Defence Industry</span></div>
+              <div class="l-stat"><strong>15+</strong><span>Countries<br/>Actively Served</span></div>
+              <div class="l-stat"><strong>50+</strong><span>Defence Client<br/>Relationships</span></div>
+            </div>
+            <div class="l-skills">
+              <span class="skill">Defence Procurement</span>
+              <span class="skill">EU &amp; NATO Markets</span>
+              <span class="skill">Ukraine Defence Network</span>
+              <span class="skill">Strategic Sales</span>
+              <span class="skill">Nordic Markets</span>
+              <span class="skill">Key Account Management</span>
+            </div>
+            <a class="l-link" href="#"><svg viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>Connect on LinkedIn</a>
+          </div>
+        </div>
+
+        <!-- Partner 2 — Indian man -->
+        <div class="leader-card rev fi d2">
+          <div class="l-photo">
+            <img
+              src="guy.jpg"
+              alt="Rajiv Mehta – Global Sourcing Expert"
+              loading="lazy"
+              onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=840&q=82&fit=crop&crop=top&auto=format'"
+            />
+            <div class="l-photo-overlay"></div>
+            <div class="l-photo-badge">
+              <span class="l-badge-flag">🇮🇳</span>
+              <div class="l-badge-text">India Operations<br/>Global Sourcing Hub</div>
+            </div>
+          </div>
+          <div class="l-info">
+            <div class="l-num">02 &middot; Co-Founder &amp; Partner</div>
+            <div class="l-name">Rajiv Mehta</div>
+            <div class="l-title">Global Sourcing Expert &amp; Head of Procurement Operations</div>
+            <div class="l-bar"></div>
+            <p class="l-bio">Rajiv is an internationally recognised procurement and supply chain specialist with more than 12 years of hands-on experience managing complex, cross-border sourcing projects for defence, aerospace, and heavy industrial clients.</p>
+            <p class="l-bio">His technical depth — spanning metallurgy, precision engineering, electronics, and mechanical systems — allows him to evaluate manufacturer capabilities at a level most commercial intermediaries cannot match. He has personally audited and qualified over 200 suppliers across Asia, South Asia, and Eastern Europe.</p>
+            <p class="l-bio">Rajiv manages the full sourcing lifecycle: from initial specification analysis and supplier discovery through factory audits, quality inspections, logistics coordination, and final delivery documentation — ensuring every order meets the exacting standards European defence buyers require.</p>
+            <div class="l-stats">
+              <div class="l-stat"><strong>12+</strong><span>Years in<br/>Global Sourcing</span></div>
+              <div class="l-stat"><strong>200+</strong><span>Verified<br/>Suppliers</span></div>
+              <div class="l-stat"><strong>120+</strong><span>Orders<br/>Delivered</span></div>
+            </div>
+            <div class="l-skills">
+              <span class="skill">Global Procurement</span>
+              <span class="skill">Supplier Auditing</span>
+              <span class="skill">Technical Sourcing</span>
+              <span class="skill">Quality Assurance</span>
+              <span class="skill">Supply Chain Management</span>
+              <span class="skill">Cross-border Logistics</span>
+            </div>
+            <a class="l-link" href="#"><svg viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>Connect on LinkedIn</a>
+          </div>
+        </div>
+
+      </div>
+
+      <div style="margin-top:5rem">
+        <div style="text-align:center;margin-bottom:2.4rem">
+          <div class="label" style="text-align:center">Our Foundation</div>
+          <h2 class="h2" style="text-align:center">Built on Shared Values</h2>
+        </div>
+        <div class="vals-grid">
+          <div class="val-card fi"><div class="val-icon">🛡️</div><h4>Integrity First</h4><p>We operate with complete transparency. Our clients know exactly who their suppliers are, what they're getting, and why.</p></div>
+          <div class="val-card fi d1"><div class="val-icon">🎯</div><h4>Technical Precision</h4><p>Defence procurement demands exacting standards. We never compromise on specification adherence and rigorous quality control.</p></div>
+          <div class="val-card fi d2"><div class="val-icon">🌉</div><h4>Bridging Worlds</h4><p>We exist to connect — bringing the right buyers and manufacturers together to create lasting value on both sides.</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ════════════ CONTACT ════════════ -->
+<div class="page" id="page-contact">
+  <div class="page-hero">
+    <div class="ph-bg"></div>
+    <div class="container"><div class="ph-inner">
+      <div class="label">Reach Out</div>
+      <h1>Get in Touch</h1>
+      <p>Whether you're looking for specific parts, exploring services, or interested in a partnership — we'd love to hear from you. We typically respond within one business day.</p>
+    </div></div>
+  </div>
+  <section class="sec">
+    <div class="container">
+      <div class="contact-grid">
+        <div class="ci">
+          <h3>About NordSource</h3>
+          <p>NordSource is a boutique defence and industrial sourcing consultancy combining Finnish defence market expertise with global procurement capability. We serve international B2B clients across Europe and beyond.</p>
+          <h3>Our Offices</h3>
+          <div class="office-box">
+            <h4>🇫🇮 Finland — European Operations</h4>
+            <div class="office-row"><span class="oi">📍</span><span>Helsinki Metropolitan Area, Finland</span></div>
+            <div class="office-row"><span class="oi">📞</span><span>+358 — Contact via form</span></div>
+            <div class="office-row"><span class="oi">✉️</span><a href="mailto:contact@nordsourcepartners.com">contact@nordsourcepartners.com</a></div>
+          </div>
+          <div class="office-box" style="margin-top:.9rem">
+            <h4>🇮🇳 India — Sourcing Operations</h4>
+            <div class="office-row"><span class="oi">📍</span><span>Procurement Hub, India</span></div>
+            <div class="office-row"><span class="oi">📞</span><span>+91 — Contact via form</span></div>
+            <div class="office-row"><span class="oi">✉️</span><a href="mailto:sourcing@nordsourcepartners.com">sourcing@nordsourcepartners.com</a></div>
+          </div>
+          <h3>Response Time</h3>
+          <p>We aim to respond within <strong>1–2 business days</strong>. For urgent requirements, note "URGENT" in your message.</p>
+        </div>
+        <div class="form-box">
+          <h2>Send Us a Message</h2>
+          <p class="fsub">Fill in the form below and our team will get back to you promptly.</p>
+          <div id="formWrap">
+            <div class="frow">
+              <div class="fg"><label>Full Name *</label><input id="f-name" type="text" placeholder="John Doe"/><div class="err" id="e-name">Please enter your name</div></div>
+              <div class="fg"><label>Company Name *</label><input id="f-company" type="text" placeholder="Your Company Ltd"/><div class="err" id="e-company">Please enter company name</div></div>
+            </div>
+            <div class="frow">
+              <div class="fg"><label>Email Address *</label><input id="f-email" type="email" placeholder="john@company.com"/><div class="err" id="e-email">Please enter a valid email</div></div>
+              <div class="fg"><label>Phone Number</label><input id="f-phone" type="tel" placeholder="+358 40 000 0000"/></div>
+            </div>
+            <div class="fg">
+              <label>Inquiry Type *</label>
+              <select id="f-type">
+                <option value="">Select inquiry type…</option>
+                <option>Looking for Parts</option>
+                <option>Looking for Services</option>
+                <option>Partnership Opportunity</option>
+                <option>General Inquiry</option>
+              </select>
+              <div class="err" id="e-type">Please select an inquiry type</div>
+            </div>
+            <div class="fg"><label>Message *</label><textarea id="f-msg" placeholder="Please describe your requirements, components needed, specifications or timelines…"></textarea><div class="err" id="e-msg">Please enter a message</div></div>
+            <button class="btn-submit" id="submitBtn" onclick="sendForm()">Send Message</button>
+          </div>
+          <div class="success-box" id="successBox">
+            <div class="si">✅</div>
+            <h3>Message Sent Successfully!</h3>
+            <p>Thank you for reaching out. Our team will review your inquiry and respond within 1–2 business days.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ════════════ BLOG ════════════ -->
+<div class="page" id="page-blog">
+  <div class="page-hero">
+    <div class="ph-bg"></div>
+    <div class="container"><div class="ph-inner">
+      <div class="label">Knowledge Hub</div>
+      <h1>Industry Insights</h1>
+      <p>Expert perspectives on defence procurement, global sourcing trends, and industrial supply chain developments from our leadership team.</p>
+    </div></div>
+  </div>
+  <section class="sec">
+    <div class="container">
+      <!-- FEATURED -->
+      <div class="blog-featured" onclick="openBlog(0)">
+        <div class="bf-img">
+          <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?w=900&q=80&fit=crop&auto=format" alt="European Defence Supply Chain" loading="lazy" onerror="this.style.background='#112240'"/>
+          <div class="bf-overlay"></div>
+        </div>
+        <div class="bf-body">
+          <div class="bc-meta"><span class="bc-cat">Supply Chain</span><span class="bc-date">March 2025</span></div>
+          <div class="bf-title">Trends in European Defence Supply Chains</div>
+          <p style="color:var(--body);font-size:.9rem;line-height:1.72;margin-bottom:1.5rem">As European nations rapidly scale defence spending in response to shifting geopolitical realities, supply chain structures are being fundamentally rethought. We examine the key trends reshaping procurement across NATO allies.</p>
+          <span class="read-more">Read Full Article →</span>
+        </div>
+      </div>
+      <!-- GRID -->
+      <div class="blog-grid">
+        <div class="blog-card fi d1" onclick="openBlog(1)">
+          <div class="bc-img">
+            <img src="https://images.unsplash.com/photo-1553413077-190dd305871c?w=700&q=80&fit=crop&auto=format" alt="Global Industrial Sourcing" loading="lazy" onerror="this.style.background='#1a2f1a'"/>
+            <div class="bc-overlay"></div>
+          </div>
+          <div class="bc-body">
+            <div class="bc-meta"><span class="bc-cat">Procurement</span><span class="bc-date">February 2025</span></div>
+            <div class="bc-title">Challenges in Global Industrial Sourcing</div>
+            <p class="bc-excerpt">From geopolitical risk and raw material volatility to quality certification complexity, global industrial sourcing has never been more demanding.</p>
+            <span class="read-more">Read More →</span>
+          </div>
+        </div>
+        <div class="blog-card fi d2" onclick="openBlog(2)">
+          <div class="bc-img">
+            <img src="https://images.unsplash.com/photo-1581092795360-fd1ca04f0952?w=700&q=80&fit=crop&auto=format" alt="Defence Manufacturing Standards" loading="lazy" onerror="this.style.background='#1a1428'"/>
+            <div class="bc-overlay"></div>
+          </div>
+          <div class="bc-body">
+            <div class="bc-meta"><span class="bc-cat">Standards</span><span class="bc-date">January 2025</span></div>
+            <div class="bc-title">Defence Manufacturing Standards in Europe</div>
+            <p class="bc-excerpt">Navigating AQAP, NATO STANAG, and EU defence procurement regulations is a significant barrier for international suppliers entering European markets.</p>
+            <span class="read-more">Read More →</span>
+          </div>
+        </div>
+        <div class="blog-card fi d3" onclick="openBlog(3)">
+          <div class="bc-img">
+            <img src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d?w=700&q=80&fit=crop&auto=format" alt="EU Ukraine Collaboration" loading="lazy" onerror="this.style.background='#1a2810'"/>
+            <div class="bc-overlay"></div>
+          </div>
+          <div class="bc-body">
+            <div class="bc-meta"><span class="bc-cat">Collaboration</span><span class="bc-date">December 2024</span></div>
+            <div class="bc-title">The Future of EU–Ukraine Industrial Collaboration</div>
+            <p class="bc-excerpt">Ukraine's defence industrial base is attracting significant European investment and partnership interest. We explore the emerging opportunities.</p>
+            <span class="read-more">Read More →</span>
+          </div>
+        </div>
+      </div>
+      <!-- NEWSLETTER -->
+      <div class="newsletter">
+        <div class="nl-inner">
+          <div class="label" style="text-align:center;margin-bottom:.6rem">Stay Informed</div>
+          <h2 class="h2 light" style="text-align:center;max-width:520px;margin:0 auto .8rem">Subscribe to Our Insights</h2>
+          <p class="lead light" style="text-align:center;margin:0 auto 2rem;font-size:.92rem">Receive our latest articles on defence procurement and sourcing trends directly in your inbox.</p>
+          <div class="nl-row">
+            <input class="nl-input" type="email" id="nlEmail" placeholder="Your email address"/>
+            <button class="btn btn-gold" onclick="subscribeNl(this)">Subscribe</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <div class="logo" onclick="nav('home')"><div class="logo-box">NS</div><span class="logo-text">Nord<span>Source</span> Partners</span></div>
+        <p>Connecting European defence buyers with trusted global manufacturing and sourcing expertise. Founded by specialists in Finnish defence markets and Indian procurement excellence.</p>
+      </div>
+      <div class="footer-col"><h4>Company</h4><ul><li><a onclick="nav('home')">Home</a></li><li><a onclick="nav('services')">Services</a></li><li><a onclick="nav('leadership')">Leadership</a></li><li><a onclick="nav('blog')">Insights</a></li><li><a onclick="nav('contact')">Contact</a></li></ul></div>
+      <div class="footer-col"><h4>Services</h4><ul><li><a>Component Sourcing</a></li><li><a>Technical Support</a></li><li><a>International Collaboration</a></li><li><a>Strategic Business Support</a></li></ul></div>
+      <div class="footer-col"><h4>Contact</h4><ul><li><a>Helsinki, Finland</a></li><li><a>India Operations</a></li><li><a>contact@nordsourcepartners.com</a></li></ul></div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2025 NordSource. All rights reserved.</p>
+      <p>Designed for <span>defence &amp; industrial excellence</span></p>
+    </div>
+  </div>
+</footer>
+
+<!-- BLOG MODAL -->
+<div class="modal-bg" id="modal">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeModal()">✕ Close</button>
+    <div class="modal-body" id="modalBody"></div>
+  </div>
+</div>
+
+<script>
+// EmailJS credentials — replace with your own
+const EJS_SVC = 'service_wchqazs';
+const EJS_TPL = 'template_tzix45p';
+const EJS_KEY = '8j5nDH-MrzwaaLo-t';
+try { emailjs.init({ publicKey: EJS_KEY }); } catch(e) {}
+
+// NAVIGATION
+function nav(id) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-links li a').forEach(a => a.classList.remove('active'));
+  var pg = document.getElementById('page-' + id);
+  if (pg) pg.classList.add('active');
+  var nl = document.getElementById('n-' + id);
+  if (nl) nl.classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+  document.getElementById('navLinks').classList.remove('open');
+  setTimeout(initFI, 100);
+}
+function toggleMenu() {
+  document.getElementById('navLinks').classList.toggle('open');
+}
+
+// FADE-IN
+function initFI() {
+  var obs = new IntersectionObserver(function(entries) {
+    entries.forEach(function(e) { if (e.isIntersecting) e.target.classList.add('v'); });
+  }, { threshold: 0.08 });
+  document.querySelectorAll('.fi:not(.v)').forEach(function(el) { obs.observe(el); });
+}
+
+// FORM
+function showErr(id, show) {
+  var el = document.getElementById(id);
+  if (el) el.style.display = show ? 'block' : 'none';
+}
+function validEmail(e) { return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e); }
+
+async function sendForm() {
+  var name    = document.getElementById('f-name').value.trim();
+  var company = document.getElementById('f-company').value.trim();
+  var email   = document.getElementById('f-email').value.trim();
+  var type    = document.getElementById('f-type').value;
+  var msg     = document.getElementById('f-msg').value.trim();
+  var phone   = document.getElementById('f-phone').value.trim();
+
+  var ok = true;
+
+  showErr('e-name', !name);
+  if (!name) ok = false;
+
+  showErr('e-company', !company);
+  if (!company) ok = false;
+
+  showErr('e-email', !validEmail(email));
+  if (!validEmail(email)) ok = false;
+
+  showErr('e-type', !type);
+  if (!type) ok = false;
+
+  showErr('e-msg', !msg);
+  if (!msg) ok = false;
+
+  if (!ok) return;
+
+  var btn = document.getElementById('submitBtn');
+  btn.disabled = true;
+  btn.textContent = 'Sending...';
+
+  try {
+
+    await emailjs.send(EJS_SVC, EJS_TPL, {
+      from_name: name,
+      company_name: company,
+      from_email: email,
+      phone: phone || "N/A",
+      inquiry_type: type,
+      message: msg
+    });
+
+    document.getElementById('formWrap').style.display = 'none';
+    document.getElementById('successBox').classList.add('show');
+
+  } catch (error) {
+
+    console.error("EmailJS Error:", error);
+
+    btn.disabled = false;
+    btn.textContent = 'Send Message';
+
+    alert("Failed to send message. Please try again.");
+
+  }
+}
+
+// BLOG
+var ARTICLES = [
+  { cat:'Supply Chain', date:'March 2025', title:'Trends in European Defence Supply Chains',
+    body:'<p>As European nations rapidly scale defence spending in response to shifting geopolitical realities, supply chain structures are being fundamentally rethought.</p><h4>Accelerated Procurement Timelines</h4><p>Traditional multi-year procurement cycles are being compressed. Governments are looking to expedite delivery timelines, placing increased pressure on existing suppliers and opening doors for new entrants who can meet urgent requirements.</p><h4>Supply Chain Diversification</h4><p>Single-source dependency risks are being actively reduced. Procurement officers are seeking alternative qualified suppliers for critical components — a trend that creates significant opportunity for companies with verified international manufacturing networks.</p><h4>European Strategic Autonomy</h4><p>The EU\'s focus on strategic autonomy is driving investment in domestic and allied-nation manufacturing. This creates both challenges for non-European suppliers and opportunities for those who can demonstrate compliance, reliability, and long-term partnership commitment.</p><h4>What This Means for Buyers</h4><p>For defence procurement professionals, the current environment demands more agile sourcing strategies, greater supplier diversification, and trusted partners who can identify and validate new manufacturing sources quickly.</p>'
+  },
+  { cat:'Procurement', date:'February 2025', title:'Challenges in Global Industrial Sourcing',
+    body:'<p>Global industrial sourcing has become significantly more complex over the past five years. Procurement professionals face a confluence of challenges that require sophisticated navigation.</p><h4>Geopolitical and Trade Risk</h4><p>Shifting trade relationships, export controls, and sanctions regimes have made supplier qualification more complex. What was a straightforward sourcing route two years ago may now be blocked or heavily restricted — making up-to-date trade knowledge essential.</p><h4>Quality Certification Complexity</h4><p>Defence-grade components require extensive certification documentation. ISO, AQAP, NATO STANAG, and country-specific standards create significant barriers for buyers sourcing internationally.</p><h4>Lead Time Volatility</h4><p>Post-pandemic supply chain disruptions have created persistent lead time uncertainty across many component categories. Building buffer inventory and multi-sourcing strategies has become standard practice.</p><h4>The Role of Trusted Partners</h4><p>Working with established sourcing partners who maintain verified supplier networks and understand the regulatory landscape provides significant advantages — reducing both risk and procurement timelines.</p>'
+  },
+  { cat:'Standards', date:'January 2025', title:'Defence Manufacturing Standards in Europe',
+    body:'<p>For international manufacturers seeking to supply into European defence markets, understanding the applicable standards framework is non-negotiable.</p><h4>AQAP — Allied Quality Assurance Publications</h4><p>AQAP standards define NATO\'s requirements for quality management in defence contracting. AQAP-2110 (design, development, and production) is the most commonly required. Achieving AQAP certification demonstrates to European buyers that a manufacturer operates at the level required for defence supply.</p><h4>NATO STANAGs</h4><p>Standardisation Agreements (STANAGs) define technical specifications for interoperability across NATO member nations. For component suppliers, understanding which STANAGs apply to their product category is essential for entering procurement discussions with European defence buyers.</p><h4>EN 9100 — Aerospace and Defence Quality</h4><p>Based on ISO 9001, EN 9100 adds aviation, space, and defence-specific requirements. Many European prime contractors require EN 9100 certification from their tier-2 and tier-3 suppliers.</p><h4>How NordSource Can Help</h4><p>Navigating these standards requirements is a core part of our supplier qualification process. We work with manufacturers to understand their current certification status, identify gaps, and connect them with the right support to achieve the credentials needed for European defence market entry.</p>'
+  },
+  { cat:'Collaboration', date:'December 2024', title:'The Future of EU–Ukraine Industrial Collaboration',
+    body:'<p>Ukraine\'s defence industrial base — hardened by conflict and driven by necessity to innovate — is emerging as a significant factor in the long-term reshaping of European defence manufacturing.</p><h4>A Manufacturing Base Under Transformation</h4><p>Ukrainian defence manufacturers have developed exceptional capabilities in specific domains — from electronics and precision engineering to armoured vehicle systems. These capabilities, combined with lower cost structures and strong engineering talent, make Ukraine an increasingly attractive partner for European defence OEMs.</p><h4>EU Support and Investment Framework</h4><p>The European Commission has committed significant resources to supporting Ukraine\'s defence industrial reconstruction and integration. Joint ventures, technology transfer programmes, and co-production agreements are all mechanisms being actively pursued.</p><h4>Practical Collaboration Opportunities</h4><p>For European companies, practical opportunities exist across several categories: subcontracting specific manufacturing operations, sourcing components and subsystems, joint R&D programmes, and longer-term industrial partnerships that leverage Ukrainian engineering expertise.</p><h4>The Role of Trusted Intermediaries</h4><p>At NordSource, our Finnish partner\'s deep connections across Ukrainian defence procurement circles, combined with our technical sourcing expertise, positions us to support companies seeking to build meaningful long-term industrial ties with Ukrainian partners.</p>'
+  }
+];
+
+function openBlog(i) {
+  var a = ARTICLES[i];
+  document.getElementById('modalBody').innerHTML = '<div class="label">' + a.cat + ' &middot; ' + a.date + '</div><h2>' + a.title + '</h2>' + a.body;
+  document.getElementById('modal').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeModal() {
+  document.getElementById('modal').classList.remove('open');
+  document.body.style.overflow = '';
+}
+document.getElementById('modal').addEventListener('click', function(e) {
+  if (e.target === this) closeModal();
+});
+document.addEventListener('keydown', function(e) { if (e.key === 'Escape') closeModal(); });
+
+function subscribeNl(btn) {
+  var v = document.getElementById('nlEmail').value;
+  if (!v || !validEmail(v)) { alert('Please enter a valid email address.'); return; }
+  btn.textContent = '✓ Subscribed!';
+  btn.style.background = '#10b981';
+  btn.style.color = '#fff';
+  btn.disabled = true;
+}
+
+// INIT
+window.addEventListener('load', function() {
+  initFI();
+});
+</script>
+</body>
+</html>
